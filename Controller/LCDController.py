@@ -23,4 +23,4 @@ if __name__ == "__main__":
     lcdController = LCDController()
     lcdController.writeLcd(firstStr="LCD Test", secondStr="Second Row Test")
     time.sleep(2)
-    lcdController.writeLcd(firstStr="one line Test")
+    lcdController.writeLcd(firstStr="one line Test")pi
