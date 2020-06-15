@@ -39,9 +39,10 @@ def index():
 @app.route('/', methods = ["POST"])
 def formHandle():
     username = session["username"]
-    name = request.values.get('direction')
-    print("Action" + name)
-    return render_template("index.html",user=playerpool[username], mapList=playerpool[username].convertPostoArr())
+    action = request.values.get('direction')
+    print("Action " + action)
+    playerpool[username].move(action=action)
+    return render_template("index.html", user=playerpool[username], mapList=playerpool[username].convertPostoArr())
 
 
 if __name__ == "__main__":
