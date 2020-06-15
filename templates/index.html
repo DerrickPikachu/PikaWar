@@ -1,0 +1,60 @@
+<html>
+    <head><title>index</title></head>
+    <style>
+        table{
+        border-collapse: collapse;
+        width: 770px; 
+        height:220px;	
+        /*自動斷行*/
+        word-wrap: break-word;
+        table-layout: fixed;
+        margin-left:auto; 
+        margin-right:auto;
+        text-align: center;
+       }
+    </style>
+    <body>
+        <table border="2" >
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+            </tr>
+        </table>
+<p>選擇動作：</p>
+        <form action="">
+            <input type="radio" value="上" name = "direction">
+            <label for="">上</label>
+            &nbsp
+            <input type="radio" value="下" name = "direction">
+            <label for="">下</label>
+            &nbsp
+            <input type="radio" value="左" name = "direction">
+            <label for="">左</label>
+            &nbsp
+            <input type="radio" value="右" name = "direction">
+            <label for="">右</label>
+            &nbsp
+            <input type="radio" value="不動" name = "direction">
+            <label for="">不動</label>
+        </form>
+
+<p>選擇道具：</p>
+        <form action="">
+            <input type="radio" value="上" name = "direction" disabled>
+            <label for="">狙擊槍</label>
+            &nbsp
+            <input type="radio" value="下" name = "direction">
+            <label for="">特殊技能（技能卡片）</label>
+            &nbsp
+            <input type="radio" value="左" name = "direction">
+            <label for="">醫療箱</label>
+    
+        </form>
+    </body>
+</html>

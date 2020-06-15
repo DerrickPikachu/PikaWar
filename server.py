@@ -1,12 +1,13 @@
-from flask import Flask
+from flask import Flask, render_template
 
 
 app = Flask(__name__)
 
 
-@app.route('/')
-def index():
-    return "Hello World"
+@app.route('/<name>')
+def index(name):
+    testDic = {1:"a",2:"b"}
+    return render_template("index.html",name=testDic)
 
 
 if __name__ == "__main__":
