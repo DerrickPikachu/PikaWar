@@ -4,6 +4,7 @@ class player:
         self.blood = 10
         self.power = 10
         self.defense  = 10
+        self.position = [0, 0]
     def getName(self)->str:
         return self.name
     
