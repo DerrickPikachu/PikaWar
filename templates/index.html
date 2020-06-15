@@ -26,8 +26,17 @@
                 <td>6</td>
             </tr>
         </table>
+<p>玩家資訊：</p>
+        {{username}}
+        <br>
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp血量：＊＊＊＊＊＊＊＊
+        <br>
+        &nbsp&nbsp攻擊力：＊＊＊＊＊＊
+        <br>
+        &nbsp&nbsp防禦力：＊＊＊＊＊＊
+
 <p>選擇動作：</p>
-        <form action="">
+        <form method="POST">
             <input type="radio" value="上" name = "direction">
             <label for="">上</label>
             &nbsp
@@ -42,19 +51,19 @@
             &nbsp
             <input type="radio" value="不動" name = "direction">
             <label for="">不動</label>
-        </form>
 
 <p>選擇道具：</p>
-        <form action="">
-            <input type="radio" value="上" name = "direction" disabled>
+            <input type="radio" value="上" name = "tool" disabled>
             <label for="">狙擊槍</label>
             &nbsp
-            <input type="radio" value="下" name = "direction">
+            <input type="radio" value="下" name = "tool">
             <label for="">特殊技能（技能卡片）</label>
             &nbsp
-            <input type="radio" value="左" name = "direction">
+            <input type="radio" value="左" name = "tool">
             <label for="">醫療箱</label>
-    
+            <br>
+            <br>
+            <input type="submit" value="發動！">
         </form>
     </body>
 </html>
