@@ -56,17 +56,18 @@
             <label for="">不動</label>
 
 <p>選擇道具：</p>
-            <input type="radio" value="上" name = "tool" disabled>
+            <input type="radio" value="上" name = "tool" {% if 0 not in user.items %} disabled {% endif %}>
             <label for="">狙擊槍</label>
             &nbsp
-            <input type="radio" value="下" name = "tool">
+            <input type="radio" value="下" name = "tool" {% if user.usedCard %} disabled {% endif %}>
             <label for="">特殊技能（技能卡片）</label>
             &nbsp
-            <input type="radio" value="左" name = "tool">
+            <input type="radio" value="左" name = "tool" {% if 1 not in user.items %} disabled {% endif %}>
             <label for="">醫療箱</label>
             <br>
             <br>
             <input type="submit" value="發動！">
+            <button type="reset"> 清除 </button>
         </form>
     </body>
 </html>

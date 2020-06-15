@@ -5,6 +5,8 @@ class player:
         self.power = 10
         self.defense = 10
         self.position = [0, 0]
+        self.items = set()
+        self.usedCard = False
 
     def getName(self)->str:
         return self.name
