@@ -27,13 +27,16 @@
             </tr>
         </table>
 <p>玩家資訊：</p>
-        {{username}}
+        {{user.getName()}}
         <br>
-        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp血量：＊＊＊＊＊＊＊＊
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp血量：{% for i in range(1, user.getBlood()+1) %}
+        {{i}}{% endfor %}
         <br>
-        &nbsp&nbsp攻擊力：＊＊＊＊＊＊
+        &nbsp&nbsp攻擊力：{% for i in range(1, user.getPower()+1) %}
+        {{i}}{% endfor %}
         <br>
-        &nbsp&nbsp防禦力：＊＊＊＊＊＊
+        &nbsp&nbsp防禦力：{% for i in range(1, user.getDefense()+1) %}
+        {{i}}{% endfor %}
 
 <p>選擇動作：</p>
         <form method="POST">
