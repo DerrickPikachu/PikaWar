@@ -17,3 +17,12 @@ class player:
     def getDefense(self)->int:
         return self.defense
 
+    def convertPostoArr(self):
+        mapList = [0,0,0,0,0,0]
+        if self.position[0] == 0:
+            mapList[self.position[1]] = 'style=\"background-color: red;\"'
+        else:
+            mapList[self.position[1]+3] ='style=\"background-color: red;\"'
+        return mapList
+
+
