@@ -1,7 +1,7 @@
 from flask import Flask, render_template,request,session
 import os
 from datetime import timedelta
-from Player.player import player
+from Game.player import player
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
