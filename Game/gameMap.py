@@ -1,4 +1,5 @@
 from Game.item import items
+from Game.player import player
 import random
 
 
@@ -12,6 +13,11 @@ class GameMap:
             row = pos[i] // 3
             col = pos[i] % 3
             self.blocks[row][col] = items[i]
+
+    def moveOn(self, position: list, user: player):
+        if self.blocks[position[0]][position[1]] != "":
+            pass
+            # Give the player item
 
 
 if __name__ == '__main__':
