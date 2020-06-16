@@ -28,6 +28,7 @@ def index():
                 playerpool[username] = player(username)
                 print("born", username)
                 return render_template("index.html",user=playerpool[username], mapList = playerpool[username].convertPostoArr())
+
     else:
         username = session["username"]
         print("use", username)
