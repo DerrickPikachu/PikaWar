@@ -30,13 +30,13 @@
         {{user.getName()}}
         <br>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp血量：{% for i in range(1, user.getBlood()+1) %}
-        {{i}}{% endfor %}
+        {{"＊"}}{% endfor %}
         <br>
         &nbsp&nbsp攻擊力：{% for i in range(1, user.getPower()+1) %}
-        {{i}}{% endfor %}
+        {{"★"}}{% endfor %}
         <br>
         &nbsp&nbsp防禦力：{% for i in range(1, user.getDefense()+1) %}
-        {{i}}{% endfor %}
+        {{"▲"}}{% endfor %}
 
 <p>選擇動作：</p>
         <form method="POST">
