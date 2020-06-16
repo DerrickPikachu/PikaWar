@@ -28,8 +28,6 @@ def index():
             session["username"] = "player2"
             playerpool["player2"] = player("player2")
             print("born player2")
-            #for test signal
-            # status = True
             return render_template("index.html",user=playerpool["player2"], mapList = playerpool["player2"].convertPostoArr())
         elif "player3" not in playerpool:
             session["username"] = "player3"
