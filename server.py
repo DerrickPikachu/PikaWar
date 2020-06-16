@@ -1,4 +1,4 @@
-from flask import Flask, render_template,request,session
+from flask import Flask, render_template,request,session,url_for,redirect
 import os
 from datetime import timedelta
 from Game.player import player
@@ -9,9 +9,12 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=31)
 
 playerpool = dict()
 
+status = False
+
 
 @app.route('/')
 def index():
+    global status
     if  session.get('username') == None:
         if "player1" not in playerpool:
             session["username"] = "player1"
@@ -23,6 +26,8 @@ def index():
             session["username"] = "player2"
             playerpool["player2"] = player("player2")
             print("born player2")
+            #for test signal
+            status = True
             return render_template("index.html",user=playerpool["player2"], mapList = playerpool["player2"].convertPostoArr())
         elif "player3" not in playerpool:
             session["username"] = "player3"
@@ -41,8 +46,18 @@ def formHandle():
     username = session["username"]
     action = request.values.get('direction')
     print("Action " + action)
+    #suppose it will be valid
     playerpool[username].move(action=action)
-    return render_template("index.html", user=playerpool[username], mapList=playerpool[username].convertPostoArr())
+    return redirect(url_for('loadingTimeHandler'))
+    #return render_template("index.html", user=playerpool[username], mapList=playerpool[username].convertPostoArr())
+
+@app.route('/loading')
+def loadingTimeHandler():
+    global status
+    if status:
+        return redirect(url_for('index'))
+    else:
+        return render_template("loading.html")
 
 
 if __name__ == "__main__":
