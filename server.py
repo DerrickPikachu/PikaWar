@@ -2,6 +2,8 @@ from flask import Flask, render_template,request,session,url_for,redirect
 import os
 from datetime import timedelta
 from Game.player import player
+import threading
+from time import sleep
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
@@ -27,7 +29,7 @@ def index():
             playerpool["player2"] = player("player2")
             print("born player2")
             #for test signal
-            status = True
+            # status = True
             return render_template("index.html",user=playerpool["player2"], mapList = playerpool["player2"].convertPostoArr())
         elif "player3" not in playerpool:
             session["username"] = "player3"
@@ -48,6 +50,10 @@ def formHandle():
     print("Action " + action)
     #suppose it will be valid
     playerpool[username].move(action=action)
+    playerpool[username].ready = True
+    if checkAllPlayerReady():
+        thread = threading.Thread(target=gameProcess)
+        thread.start()
     return redirect(url_for('loadingTimeHandler'))
     #return render_template("index.html", user=playerpool[username], mapList=playerpool[username].convertPostoArr())
 
@@ -58,6 +64,19 @@ def loadingTimeHandler():
         return redirect(url_for('index'))
     else:
         return render_template("loading.html")
+
+
+def gameProcess():
+    global status
+    sleep(5)
+    status = True
+
+
+def checkAllPlayerReady():
+    for key, user in playerpool.items():
+        if not user.ready:
+            return False
+    return True
 
 
 if __name__ == "__main__":

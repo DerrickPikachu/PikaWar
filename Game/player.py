@@ -7,6 +7,7 @@ class player:
         self.position = [0, 0]
         self.items = set()
         self.usedCard = False
+        self.ready = False
 
     def getName(self)->str:
         return self.name
