@@ -51,7 +51,7 @@ def formHandle():
 
     #suppose it will be valid
     try:
-        playerpool[username].move(action=action)
+        # playerpool[username].move(action=action)
         playerpool[username].ready = True
         engine.addPlayer(playerpool[username])
 

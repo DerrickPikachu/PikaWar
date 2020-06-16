@@ -21,7 +21,7 @@ class MoveEvent(Event):
         self.priority = 2
 
     def eventHandle(self):
-        # self.user.move(self.action)
+        self.user.move(self.action)
         print(self.user.getName() + " moving")
 
 
@@ -45,13 +45,17 @@ class ItemEvent(Event):
 
 
 class FightEvent(Event):
-    def __init__(self, user1: player, user2: player):
+    def __init__(self, user1: player, user2: player, user3: player = None):
         super().__init__(user1)
         self.user2 = user2
+        self.user3 = user3
         self.priority = 4
 
     def eventHandle(self):
-        print(self.user.getName() + " fight with " + self.user2.getName())
+        if self.user3 is not None:
+            print(self.user.getName() + " fight with " + self.user2.getName() + " and " + self.user3.getName())
+        else:
+            print(self.user.getName() + " fight with " + self.user2.getName())
 
 
 class GetItemEvent(Event):

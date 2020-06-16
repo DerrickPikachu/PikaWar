@@ -1,4 +1,5 @@
 from Game.moveException import MoveException
+
 class player:
     def __init__(self, name:str):
         self.name = name
@@ -23,12 +24,15 @@ class player:
         return self.defense
 
     def convertPostoArr(self):
-        mapList = [0,0,0,0,0,0]
+        mapList = [0, 0, 0, 0, 0, 0]
         if self.position[0] == 0:
             mapList[self.position[1]] = 'style=\"background-color: red;\"'
         else:
             mapList[self.position[1]+3] ='style=\"background-color: red;\"'
         return mapList
+
+    def isSamePos(self, other):
+        return self.position[0] == other.position[0] and self.position[1] == other.position[1]
 
     def move(self, action):
         moveVector = [0, 0]
