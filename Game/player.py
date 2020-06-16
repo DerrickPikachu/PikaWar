@@ -1,3 +1,4 @@
+from Game.moveException import MoveException
 class player:
     def __init__(self, name:str):
         self.name = name
@@ -47,8 +48,7 @@ class player:
         if temPos[0] <= 1 and temPos[0] >= 0 and temPos[1] <= 2 and temPos[1] >= 0:
             self.position = temPos
         else:
-            # TODO: Raise an exception
-            print("move error!!")
+            raise MoveException("move error!!")
 
 
 if __name__ == "__main__":
