@@ -13,6 +13,7 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=31)
 playerpool = dict()
 
 status = False
+counter = 0
 
 
 @app.route('/')
@@ -62,11 +63,15 @@ def formHandle():
 
 @app.route('/loading')
 def loadingTimeHandler():
-    global status
+    global status, counter
     if status:
+        counter += 1
+        #TODO need to decide the number
+        if counter == 2:
+            status = False
+            counter = 0
         return redirect(url_for('index'))
     else:
-        status = False
         return render_template("loading.html")
 
 
@@ -74,6 +79,8 @@ def gameProcess():
     global status
     sleep(5)
     status = True
+    for key in playerpool:
+        playerpool[key].ready = False 
 
 
 def checkAllPlayerReady():
