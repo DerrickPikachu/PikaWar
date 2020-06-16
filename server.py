@@ -21,13 +21,17 @@ counter = 0
 def index():
     global status
     if  session.get('username') == None:
-        for i in range(1,Engine.MAX_PLAYER+1):
-            username = "player"+str(i)
-            if username not in playerpool:
-                session["username"] = username
-                playerpool[username] = player(username)
-                print("born", username)
-                return render_template("index.html",user=playerpool[username], mapList = playerpool[username].convertPostoArr())
+        if len(playerpool) < Engine.MAX_PLAYER:
+            for i in range(1,Engine.MAX_PLAYER+1):
+                username = "player"+str(i)
+                if username not in playerpool:
+                    session["username"] = username
+                    playerpool[username] = player(username)
+                    print("born", username)
+                    return render_template("index.html",user=playerpool[username], mapList = playerpool[username].convertPostoArr())
+        else:
+            print("Enter Deny!")
+            return redirect(url_for('denyHandler'))
 
     else:
         username = session["username"]
@@ -65,6 +69,9 @@ def loadingTimeHandler():
     else:
         return render_template("loading.html")
 
+@app.route('/deny')
+def denyHandler():
+    return render_template("deny.html")
 
 def gameProcess():
     global status
