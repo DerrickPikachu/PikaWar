@@ -59,7 +59,7 @@
             <input type="radio" value="狙擊槍" name = "tool" {% if 0 not in user.items %} disabled {% endif %}>
             <label for="">狙擊槍</label>
             &nbsp
-            <input type="radio" value="特殊技能（技能卡片）" name = "tool" {% if user.usedCard %} disabled {% endif %}>
+            <input type="radio" value="特殊技能" name = "tool" {% if user.usedCard %} disabled {% endif %}>
             <label for="">特殊技能（技能卡片）</label>
             &nbsp
             <input type="radio" value="醫療箱" name = "tool" {% if 1 not in user.items %} disabled {% endif %}>

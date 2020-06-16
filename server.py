@@ -12,6 +12,7 @@ app.config['SECRET_KEY'] = os.urandom(24)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=31)
 
 playerpool = dict()
+engine = Engine()
 
 status = False
 counter = 0
@@ -20,15 +21,17 @@ counter = 0
 @app.route('/')
 def index():
     global status
+
     if  session.get('username') == None:
         if len(playerpool) < Engine.MAX_PLAYER:
-            for i in range(1,Engine.MAX_PLAYER+1):
+            for i in range(1, Engine.MAX_PLAYER+1):
                 username = "player"+str(i)
+
                 if username not in playerpool:
                     session["username"] = username
                     playerpool[username] = player(username)
                     print("born", username)
-                    return render_template("index.html",user=playerpool[username], mapList = playerpool[username].convertPostoArr())
+                    return render_template("index.html", user=playerpool[username], mapList = playerpool[username].convertPostoArr())
         else:
             print("Enter Deny!")
             return redirect(url_for('denyHandler'))
@@ -36,25 +39,38 @@ def index():
     else:
         username = session["username"]
         print("use", username)
-        print(playerpool[username].getName())
-        return render_template("index.html",user=playerpool[username],mapList = playerpool[username].convertPostoArr())
+        return render_template("index.html", user=playerpool[username],mapList = playerpool[username].convertPostoArr())
     
 
 @app.route('/', methods = ["POST"])
 def formHandle():
+    global engine
     username = session["username"]
     action = request.values.get('direction')
     print("Action " + action)
+
     #suppose it will be valid
     try:
         playerpool[username].move(action=action)
         playerpool[username].ready = True
+        engine.addPlayer(playerpool[username])
+
+        engine.moveAction(username=username, action=action)
+        if request.values.get('tool'):
+            tool = request.values.get('tool')
+            if tool == '特殊技能':
+                engine.useSkill(username)
+            else:
+                engine.chooseItem(username=username, item=request.values.get('tool'))
+
         if checkAllPlayerReady():
             thread = threading.Thread(target=gameProcess)
             thread.start()
+
         return redirect(url_for('loadingTimeHandler'))
     except MoveException:
         return render_template("index.html", user=playerpool[username], mapList=playerpool[username].convertPostoArr())
+
 
 @app.route('/loading')
 def loadingTimeHandler():
@@ -69,16 +85,20 @@ def loadingTimeHandler():
     else:
         return render_template("loading.html")
 
+
 @app.route('/deny')
 def denyHandler():
     return render_template("deny.html")
+True
 
 def gameProcess():
-    global status
-    sleep(5)
+    # TODO: Engine
+    global status, engine
+    sleep(2)
+    engine.run()
     status = True
     for key in playerpool:
-        playerpool[key].ready = False 
+        playerpool[key].ready = False
 
 
 def checkAllPlayerReady():

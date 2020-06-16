@@ -54,8 +54,13 @@ class FightEvent(Event):
         print(self.user.getName() + " fight with " + self.user2.getName())
 
 
-def eventComparePriority(event1: Event, event2: Event):
-    return event1.priority > event2.priority
+class GetItemEvent(Event):
+    def __init__(self, user: player, pos: list):
+        super().__init__(user)
+        self.priority = 5
+
+    def eventHandle(self):
+        print(self.user.getName() + "get item")
 
 
 if __name__ == '__main__':
