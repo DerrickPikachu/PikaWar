@@ -1,0 +1,2 @@
+class MoveException(BaseException):
+    pass

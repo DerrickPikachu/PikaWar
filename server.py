@@ -4,6 +4,7 @@ from datetime import timedelta
 from Game.player import player
 import threading
 from time import sleep
+from Game.moveException import MoveException
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
@@ -47,13 +48,15 @@ def formHandle():
     action = request.values.get('direction')
     print("Action " + action)
     #suppose it will be valid
-    playerpool[username].move(action=action)
-    playerpool[username].ready = True
-    if checkAllPlayerReady():
-        thread = threading.Thread(target=gameProcess)
-        thread.start()
-    return redirect(url_for('loadingTimeHandler'))
-    #return render_template("index.html", user=playerpool[username], mapList=playerpool[username].convertPostoArr())
+    try:
+        playerpool[username].move(action=action)
+        playerpool[username].ready = True
+        if checkAllPlayerReady():
+            thread = threading.Thread(target=gameProcess)
+            thread.start()
+        return redirect(url_for('loadingTimeHandler'))
+    except MoveException:
+        return render_template("index.html", user=playerpool[username], mapList=playerpool[username].convertPostoArr())
 
 @app.route('/loading')
 def loadingTimeHandler():
@@ -61,6 +64,7 @@ def loadingTimeHandler():
     if status:
         return redirect(url_for('index'))
     else:
+        status = False
         return render_template("loading.html")
 
 
