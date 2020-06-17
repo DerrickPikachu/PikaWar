@@ -3,16 +3,24 @@ import random
 
 class player:
     def __init__(self, name:str, position:list):
+        # Player attribute
         self.name = name
         self.blood = 10
         self.power = 4
         self.defense = 2
+        self.bull = 0
+
+        # Player position and previous one
         self.previousPos = [0, 0]
         self.position = position
+
+        # Player item
         self.items = set()
+
+        # Player boolean
         self.usedCard = False
         self.ready = False
-        self.bull = 0
+        self.alive = True
 
     def getName(self)->str:
         return self.name
@@ -37,6 +45,11 @@ class player:
 
     def setDefense(self, level: int):
         self.defense= level
+
+    def setDead(self):
+        self.position = [-1, -1]
+        self.previousPos = [-1, -1]
+        self.alive = False
 
     def convertPostArr(self):
         mapList = [0, 0, 0, 0, 0, 0]

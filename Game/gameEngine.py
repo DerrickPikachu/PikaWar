@@ -51,6 +51,12 @@ class Engine:
         event = SkillEvent(tem)
         heapq.heappush(self.eventList, event)
 
+    # There is someone who's blood become zero
+    def makeDead(self, username: str):
+        tem = self.__choosePlayer(username=username)
+        tem.setDead()
+        Engine.MAX_PLAYER -= 1
+
     # Create fight event
     def __generateFight(self, user1: player, user2: player, user3: player = None):
         if user3 is not None:

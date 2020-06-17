@@ -96,7 +96,7 @@ def loadingTimeHandler():
 @app.route('/deny')
 def denyHandler():
     return render_template("deny.html")
-True
+
 
 def gameProcess():
     # TODO: Engine
