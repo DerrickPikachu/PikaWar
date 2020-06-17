@@ -17,6 +17,7 @@ engine = Engine()
 status = False
 counter = 0
 
+position={"player1":[0, 0], "player2":[0, 2], "player3":[1, 1]}
 
 @app.route('/')
 def index():
@@ -29,7 +30,7 @@ def index():
 
                 if username not in playerpool:
                     session["username"] = username
-                    playerpool[username] = player(username)
+                    playerpool[username] = player(username,position[username])
                     print("born", username)
                     return render_template("index.html", user=playerpool[username], mapList = playerpool[username].convertPostoArr())
         else:
@@ -102,6 +103,8 @@ def gameProcess():
 
 
 def checkAllPlayerReady():
+    if len(playerpool) != Engine.MAX_PLAYER:
+        return False
     for key, user in playerpool.items():
         if not user.ready:
             return False
