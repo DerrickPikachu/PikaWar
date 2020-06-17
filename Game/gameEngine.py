@@ -110,3 +110,8 @@ class Engine:
                             if noFight[i]:
                                 self.__getItemOnMap(self.users[i].getName())
 
+            # Check someone's death
+            for p in self.users:
+                if p.alive and p.getBlood() <= 0:
+                    self.makeDead(p.getName())
+

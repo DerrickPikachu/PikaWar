@@ -90,6 +90,8 @@ def loadingTimeHandler():
             status = False
             counter = 0
         if not playerpool[username].alive:
+            counter -= 1
+            del playerpool[username]
             return redirect(url_for("deathHandler"))
         else:
             return redirect(url_for('index'))
