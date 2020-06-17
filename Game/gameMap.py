@@ -20,8 +20,13 @@ class GameMap:
         item = ""
 
         if self.blocks[position[0]][position[1]] != "":
-            itemsMap = {items[0]: 0, items[1]:1, items[2]:2, items[3]:3}
+            itemsMap = {items[0]: 0, items[1]: 1, items[2]: 2, items[3]: 3}
+            # Put the item into user item set
             user.items.add(itemsMap[self.blocks[position[0]][position[1]]])
+            # Identify whether it is the sniper rifle
+            if self.blocks[position[0]][position[1]] == items[0]:
+                user.bull += 2
+
             item = self.blocks[position[0]][position[1]]
             self.blocks[position[0]][position[1]] = ""
 

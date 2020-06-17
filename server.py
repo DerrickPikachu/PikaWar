@@ -1,6 +1,8 @@
 from flask import Flask, render_template,request,session,url_for,redirect
 import os
 from datetime import timedelta
+
+from Game.item import items
 from Game.player import player
 import threading
 from time import sleep
@@ -61,8 +63,12 @@ def formHandle():
             tool = request.values.get('tool')
             if tool == '特殊技能':
                 engine.useSkill(username)
-            else:
+            elif tool == items[1]:
                 engine.chooseItem(username=username, item=request.values.get('tool'))
+            elif tool == items[0]:
+                shootLoc = int(request.values.get('bulletLoc'))
+                pos = [(shootLoc - 1) // 3, (shootLoc - 1) % 3]
+                engine.chooseItem(username=username, item=request.values.get('tool'), pos=pos)
 
         if checkAllPlayerReady():
             thread = threading.Thread(target=gameProcess)

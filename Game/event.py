@@ -49,7 +49,7 @@ class ItemEvent(Event):
     def eventHandle(self):
         print(self.user.getName() + " use item!!!")
         if self.item == items[0]:
-            sniperRifle(self.users[0], self.users[1], self.users[2], self.pos)
+            sniperRifle(self.user, self.users[0], self.users[1], self.users[2], self.pos)
         elif self.item == items[1]:
             medical(self.user)
 
