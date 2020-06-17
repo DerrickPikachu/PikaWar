@@ -86,7 +86,7 @@ class Engine:
                         self.__generateFight(self.users[0], self.users[1], self.users[2])
                     else:
                         # Here won't have the situation that we get three user in the same position
-                        # We at most have two of them in tehe same position
+                        # We at most have two of them in the same position
                         for i in range(2):
                             for j in range(i + 1, 3):
                                 if self.users[i].isSamePos(self.users[j]):
