@@ -4,6 +4,7 @@ from Game.player import player
 from Game.event import MoveEvent, ItemEvent, SkillEvent, FightEvent, GetItemEvent
 from Game.moveException import MoveException
 from Game.item import items
+from Controller.LCDController import LCDController
 import heapq
 import copy
 
@@ -13,6 +14,7 @@ class Engine:
 
     def __init__(self):
         self.gameMap = GameMap()
+        self.lcd = LCDController()
         self.users = []
         self.eventList = []
 
@@ -82,11 +84,11 @@ class Engine:
         while len(self.eventList) != 0:
             event = heapq.heappop(self.eventList)
             if str(type(event)) == "<class 'Game.event.FightEvent'>":
-                winner = event.eventHandle()
+                winner = event.eventHandle(self.lcd)
                 print("winner " + winner)
                 self.__getItemOnMap(winner)
             else:
-                event.eventHandle()
+                event.eventHandle(self.lcd)
 
             if str(type(event)) == "<class 'Game.event.MoveEvent'>":
                 moveCount += 1
