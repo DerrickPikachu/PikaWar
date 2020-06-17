@@ -15,7 +15,7 @@ class LEDController:
 
     def hintLed(self, row, col):
         GPIO.output(self.ledMap[row][col], 1)
-        time.sleep(2)
+        time.sleep(3)
         GPIO.output(self.ledMap[row][col], 0)
 
 
