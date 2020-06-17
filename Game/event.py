@@ -1,5 +1,6 @@
 from Game.player import player
 from Game.moveException import MoveException
+from Game.gameMap import GameMap
 import heapq
 import random
 
@@ -103,12 +104,16 @@ class FightEvent(Event):
 
 
 class GetItemEvent(Event):
-    def __init__(self, user: player):
+    def __init__(self, user: player, gameMap:GameMap):
         super().__init__(user)
         self.priority = 5
+        self.gameMap = gameMap
 
     def eventHandle(self):
         print(self.user.getName() + " get item")
+        self.gameMap.moveOn(self.user)
+        
+        
 
 
 if __name__ == '__main__':
