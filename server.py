@@ -21,7 +21,7 @@ position={"player1":[0, 0], "player2":[0, 2], "player3":[1, 1]}
 
 @app.route('/')
 def index():
-    global status
+    global status, engine
 
     if  session.get('username') == None:
         if len(playerpool) < Engine.MAX_PLAYER:
@@ -31,6 +31,7 @@ def index():
                 if username not in playerpool:
                     session["username"] = username
                     playerpool[username] = player(username,position[username])
+                    engine.addPlayer(playerpool[username])
                     print("born", username)
                     return render_template("index.html", user=playerpool[username], mapList = playerpool[username].convertPostArr())
         else:
@@ -52,11 +53,10 @@ def formHandle():
 
     #suppose it will be valid
     try:
+        engine.moveAction(username=username, action=action)
         # playerpool[username].move(action=action)
         playerpool[username].ready = True
-        engine.addPlayer(playerpool[username])
 
-        engine.moveAction(username=username, action=action)
         if request.values.get('tool'):
             tool = request.values.get('tool')
             if tool == '特殊技能':

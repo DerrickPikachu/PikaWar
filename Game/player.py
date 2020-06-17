@@ -8,7 +8,6 @@ class player:
         self.power = 10
         self.defense = 7
         self.previousPos = [0, 0]
-        self.defense = 10
         self.position = position
         self.items = set()
         self.usedCard = False
@@ -38,6 +37,10 @@ class player:
         return self.position[0] == other.position[0] and self.position[1] == other.position[1]
 
     def move(self, action):
+        # Save the previous position
+        self.previousPos[0] = self.position[0]
+        self.previousPos[1] = self.position[1]
+
         moveVector = [0, 0]
         if action == 'up':
             moveVector = [-1, 0]

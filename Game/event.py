@@ -55,6 +55,7 @@ class FightEvent(Event):
 
     def eventHandle(self):
         if self.user3 is not None:
+            print(self.user.getName() + " fight with " + self.user2.getName() + " and " + self.user3.getName())
             # Let everyone get a fight
             self.user.fightWith(self.user2)
             self.user.fightWith(self.user3)
@@ -62,40 +63,52 @@ class FightEvent(Event):
 
             # If there is a problem in the future, first consider here
             if self.user.blood == self.user2.blood and self.user.blood == self.user3.blood:
+                # Everyone have the same blood
                 choose = random.randint(1, 3)
                 if choose == 1:
                     self.user2.moveBack()
                     self.user3.moveBack()
+                    return self.user.getName()
                 elif choose == 2:
                     self.user.moveBack()
                     self.user3.moveBack()
+                    return self.user2.getName()
                 elif choose == 3:
                     self.user.moveBack()
                     self.user2.moveBack()
+                    return self.user3.getName()
             elif self.user.blood >= self.user2.blood and self.user.blood >= self.user3.blood:
+                # Player1 have the highest blood
                 self.user2.moveBack()
                 self.user3.moveBack()
+                return self.user.getName()
             elif self.user2.blood >= self.user.blood and self.user2.blood >= self.user3.blood:
+                # Player2 have the highest blood
                 self.user.moveBack()
                 self.user3.moveBack()
+                return self.user2.getName()
             elif self.user3.blood >= self.user.blood and self.user3.blood >= self.user2.blood:
+                # Player3 have the highest blood
                 self.user.moveBack()
                 self.user2.moveBack()
-
-            print(self.user.getName() + " fight with " + self.user2.getName() + " and " + self.user3.getName())
+                return self.user3.getName()
         else:
             loser = self.user.fightWith(self.user2)
             loser.moveBack()
             print(self.user.getName() + " fight with " + self.user2.getName())
+            if self.user.getName() == loser.getName():
+                return self.user2.getName()
+            else:
+                return self.user.getName()
 
 
 class GetItemEvent(Event):
-    def __init__(self, user: player, pos: list):
+    def __init__(self, user: player):
         super().__init__(user)
         self.priority = 5
 
     def eventHandle(self):
-        print(self.user.getName() + "get item")
+        print(self.user.getName() + " get item")
 
 
 if __name__ == '__main__':
