@@ -1,6 +1,7 @@
 from Game.gameMap import GameMap
 from Game.player import player
 from Game.event import MoveEvent, ItemEvent, SkillEvent, FightEvent, GetItemEvent
+from Game.moveException import MoveException
 import heapq
 
 
@@ -23,8 +24,16 @@ class Engine:
     # Create move event
     def moveAction(self, username: str, action: str):
         tem = self.__choosePlayer(username=username)
-        event = MoveEvent(user=tem, action=action)
-        heapq.heappush(self.eventList, event)
+        try:
+            tem.detectMoveError(action)
+            print("stop")
+            event = MoveEvent(user=tem, action=action)
+            heapq.heappush(self.eventList, event)
+        except MoveException:
+            print("action error")
+            raise MoveException("move error 2!")
+
+        
 
     # Create item event
     def chooseItem(self, username: str, item: str):

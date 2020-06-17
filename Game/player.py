@@ -2,13 +2,14 @@ from Game.moveException import MoveException
 import random
 
 class player:
-    def __init__(self, name:str):
+    def __init__(self, name:str, position:list):
         self.name = name
         self.blood = 10
         self.power = 10
         self.defense = 7
         self.previousPos = [0, 0]
-        self.position = [0, 0]
+        self.defense = 10
+        self.position = position
         self.items = set()
         self.usedCard = False
         self.ready = False
@@ -50,14 +51,27 @@ class player:
         temPos = [0, 0]
         temPos[0] = moveVector[0] + self.position[0]
         temPos[1] = moveVector[1] + self.position[1]
+        self.position = temPos
+
+    def detectMoveError(self, action):
+        moveVector = [0, 0]
+        if action == 'up':
+            moveVector = [-1, 0]
+        elif action == 'down':
+            moveVector = [1, 0]
+        elif action == 'right':
+            moveVector = [0, 1]
+        elif action == 'left':
+            moveVector = [0, -1]
+
+        temPos = [0, 0]
+        temPos[0] = moveVector[0] + self.position[0]
+        temPos[1] = moveVector[1] + self.position[1]
 
         if temPos[0] <= 1 and temPos[0] >= 0 and temPos[1] <= 2 and temPos[1] >= 0:
-            # Save previous position
-            self.previousPos[0] = self.position[0]
-            self.previousPos[1] = self.position[1]
-            # Set new Position
-            self.position = temPos
+            pass
         else:
+            print("raise MoveException")
             raise MoveException("move error!!")
 
     def moveBack(self):
