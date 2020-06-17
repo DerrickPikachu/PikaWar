@@ -53,6 +53,16 @@
             $(".bS01").hide();
         }
     </script>
+    {% if 0 in user.items %}  
+    <script>
+        alert("狙擊槍")
+    </script>
+    {% endif %}
+    {% if 1 in user.items %}  
+    <script>
+        alert("醫療箱")
+    </script>
+    {% endif %}
     <body>
         <table border="2" >
             <tr>
