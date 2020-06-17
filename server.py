@@ -83,18 +83,21 @@ def formHandle():
 def loadingTimeHandler():
     username = session.get('username')
     global status, counter
+
+    if not playerpool[username].alive:
+        del playerpool[username]
+        return redirect(url_for("deathHandler"))
+
     if status:
         counter += 1
         #TODO need to decide the number
         if counter == Engine.MAX_PLAYER:
             status = False
             counter = 0
-        if not playerpool[username].alive:
-            counter -= 1
-            del playerpool[username]
-            return redirect(url_for("deathHandler"))
-        else:
-            return redirect(url_for('index'))
+
+        if Engine.MAX_PLAYER == 1:
+            return redirect(url_for('winnerHandler'))
+        return redirect(url_for('index'))
     else:
         return render_template("loading.html")
 
@@ -108,6 +111,13 @@ def denyHandler():
 def deathHandler():
     session.clear()
     return render_template("death.html")
+
+
+@app.route('/winner')
+def winnerHandler():
+    session.clear()
+    return render_template("winner.html")
+
 
 def gameProcess():
     # TODO: Engine
