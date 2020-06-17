@@ -1,5 +1,6 @@
 from Game.player import player
 import heapq
+import random
 
 
 class Event:
@@ -53,6 +54,33 @@ class FightEvent(Event):
 
     def eventHandle(self):
         if self.user3 is not None:
+            # Let everyone get a fight
+            self.user.fightWith(self.user2)
+            self.user.fightWith(self.user3)
+            self.user2.fightWith(self.user3)
+
+            # If there is a problem in the future, first consider here
+            if self.user.blood == self.user2.blood and self.user.blood == self.user3.blood:
+                choose = random.randint(1, 3)
+                if choose == 1:
+                    self.user2.moveBack()
+                    self.user3.moveBack()
+                elif choose == 2:
+                    self.user.moveBack()
+                    self.user3.moveBack()
+                elif choose == 3:
+                    self.user.moveBack()
+                    self.user2.moveBack()
+            elif self.user.blood >= self.user2.blood and self.user.blood >= self.user3.blood:
+                self.user2.moveBack()
+                self.user3.moveBack()
+            elif self.user2.blood >= self.user.blood and self.user2.blood >= self.user3.blood:
+                self.user.moveBack()
+                self.user3.moveBack()
+            elif self.user3.blood >= self.user.blood and self.user3.blood >= self.user2.blood:
+                self.user.moveBack()
+                self.user2.moveBack()
+
             print(self.user.getName() + " fight with " + self.user2.getName() + " and " + self.user3.getName())
         else:
             loser = self.user.fightWith(self.user2)
