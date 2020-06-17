@@ -1,17 +1,37 @@
 <html>
-    <head><title>index</title></head>
+    <head>
+        <title>index</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
     <style>
-        table{
-        border-collapse: collapse;
-        width: 770px; 
-        height:220px;	
-        /*自動斷行*/
-        word-wrap: break-word;
-        table-layout: fixed;
-        margin-left:auto; 
-        margin-right:auto;
-        text-align: center;
-       }
+        @media (min-width: 200px) {
+            table{
+                border-collapse: collapse;
+                width: 300px; 
+                height:220px;	
+                /*自動斷行*/
+                word-wrap: break-word;
+                table-layout: fixed;
+                margin-left:auto; 
+                margin-right:auto;
+                text-align: center;
+            }
+        }
+
+        @media (min-width: 800px) {
+            table{
+                border-collapse: collapse;
+                width: 770px; 
+                height:220px;	
+                /*自動斷行*/
+                word-wrap: break-word;
+                table-layout: fixed;
+                margin-left:auto; 
+                margin-right:auto;
+                text-align: center;
+            }
+        }
+        
 
        .box{display: none;}
     </style>
@@ -46,21 +66,22 @@
                 <td {{mapList[5]|safe}}>6</td>
             </tr>
         </table>
-<p>玩家資訊：</p>
-        {{user.getName()}}
+<br>
+<br>
+        <span style="font-size: large; font-weight: bold;">{{user.getName()}}</span>
         <br>
-        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp血量：{% for i in range(1, user.getBlood()+1) %}
-        {{"＊"}}{% endfor %}
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp血量({{user.getBlood()}})：{% for i in range(1, user.getBlood()+1) %}
+        <span style="color: red;"> {{"＊"}}</span>{% endfor %} 
         <br>
-        &nbsp&nbsp攻擊力：{% for i in range(1, user.getPower()+1) %}
-        {{"★"}}{% endfor %}
+        &nbsp&nbsp攻擊力 ({{user.getPower()}}) ：{% for i in range(1, user.getPower()+1) %}
+        <span style="color:darkorange;">{{"★"}}</span>{% endfor %}
         <br>
-        &nbsp&nbsp防禦力：{% for i in range(1, user.getDefense()+1) %}
-        {{"▲"}}{% endfor %}
+        &nbsp&nbsp防禦力 ({{user.getDefense()}}) ：{% for i in range(1, user.getDefense()+1) %}
+        <span style="color:cornflowerblue;">{{"▲"}}</span>{% endfor %}
 
-<p>選擇動作：</p>
+<p style="font-weight: bold;">選擇動作：</p>
         <form method="POST">
-            <input type="radio" value="up" name = "direction">
+            <input type="radio" value="up" name = "direction" checked>
             <label for="">上</label>
             &nbsp
             <input type="radio" value="down" name = "direction">
@@ -75,7 +96,7 @@
             <input type="radio" value="no_move" name = "direction">
             <label for="">不動</label>
 
-<p>選擇道具：</p>
+<p style="font-weight: bold;">選擇道具：</p>
             <input type="radio" value="狙擊槍" name = "tool" {% if 0 not in user.items %} disabled {% endif %}>
             <label for="">狙擊槍</label>
             &nbsp
@@ -102,7 +123,10 @@
                 <input type="radio" value="6" name = "bulletLoc" >
                 <label for="">6</label>
             </div>
-            <input type="submit" value="發動！">
+            <input type="submit" value="發動！" style="color: forestgreen;">
+            &nbsp
+            &nbsp
+            &nbsp
             <button type="reset" value="reset" onclick="hideGun()"> 清除 </button>
         </form>
     </body>
