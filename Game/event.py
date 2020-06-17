@@ -51,11 +51,13 @@ class ItemEvent(Event):
         self.pos = pos
         self.item = item
         self.priority = 3
+        self.led = ledController
 
     def eventHandle(self, lcd):
         print(self.user.getName() + " use item!!!")
         lcd.writeLcd(self.user.getName() + " use item!!!")
         if self.item == items[0]:
+            self.led.hintLed(self.pos[0], self.pos[1])
             sniperRifle(self.user, self.users[0], self.users[1], self.users[2], self.pos)
         elif self.item == items[1]:
             medical(self.user)
