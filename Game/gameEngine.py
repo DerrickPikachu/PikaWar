@@ -3,6 +3,7 @@ from Game.player import player
 from Game.event import MoveEvent, ItemEvent, SkillEvent, FightEvent, GetItemEvent
 from Game.moveException import MoveException
 import heapq
+import copy
 
 
 class Engine:
@@ -59,7 +60,8 @@ class Engine:
     # Create get item event
     def __getItemOnMap(self, username: str):
         user = self.__choosePlayer(username)
-        event = GetItemEvent(user)
+        # Create a new instance of game map for get item event
+        event = GetItemEvent(user, copy.deepcopy(self.gameMap))
         heapq.heappush(self.eventList, event)
 
     def run(self):
@@ -87,10 +89,16 @@ class Engine:
                     else:
                         # Here won't have the situation that we get three user in the same position
                         # We at most have two of them in the same position
+                        noFight = [True, True, True]
+
                         for i in range(2):
                             for j in range(i + 1, 3):
                                 if self.users[i].isSamePos(self.users[j]):
+                                    noFight[i] = False
+                                    noFight[j] = False
                                     self.__generateFight(self.users[i], self.users[j])
 
-
+                        for i in range(3):
+                            if noFight[i]:
+                                self.__getItemOnMap(self.users[i].getName())
 

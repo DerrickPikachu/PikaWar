@@ -112,6 +112,7 @@ class GetItemEvent(Event):
     def eventHandle(self):
         print(self.user.getName() + " get item")
         self.gameMap.moveOn(self.user)
+        print(self.user.items)
         
         
 
