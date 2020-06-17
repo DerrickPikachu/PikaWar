@@ -45,9 +45,9 @@ class Engine:
         tem = self.__choosePlayer(username=username)
         # event = ItemEvent
         if pos is not None:
-            event = ItemEvent(tem, item, self.users, pos)
+            event = ItemEvent(self.ledController, tem, item, self.users, pos)
         else:
-            event = ItemEvent(tem, item)
+            event = ItemEvent(self.ledController, tem, item)
         heapq.heappush(self.eventList, event)
 
     # Create skill event
