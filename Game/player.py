@@ -5,8 +5,8 @@ class player:
     def __init__(self, name:str, position:list):
         self.name = name
         self.blood = 10
-        self.power = 10
-        self.defense = 7
+        self.power = 4
+        self.defense = 2
         self.previousPos = [0, 0]
         self.position = position
         self.items = set()
