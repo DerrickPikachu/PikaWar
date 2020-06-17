@@ -1,3 +1,4 @@
+from Controller.LEDController import LEDController
 from Game.gameMap import GameMap
 from Game.player import player
 from Game.event import MoveEvent, ItemEvent, SkillEvent, FightEvent, GetItemEvent
@@ -16,6 +17,8 @@ class Engine:
         self.lcd = LCDController()
         self.users = []
         self.eventList = []
+
+        self.ledController = LEDController()
 
     def addPlayer(self, user: player):
         self.users.append(user)
@@ -62,10 +65,10 @@ class Engine:
     # Create fight event
     def __generateFight(self, user1: player, user2: player, user3: player = None):
         if user3 is not None:
-            event = FightEvent(user1, user2, user3)
+            event = FightEvent(self.ledController, user1, user2, user3)
             heapq.heappush(self.eventList, event)
         else:
-            event = FightEvent(user1, user2)
+            event = FightEvent(self.ledController, user1, user2)
             heapq.heappush(self.eventList, event)
 
     # Create get item event

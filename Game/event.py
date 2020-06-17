@@ -1,3 +1,6 @@
+import threading
+
+from Controller.LEDController import LEDController
 from Game.player import player
 from Game.moveException import MoveException
 from Game.gameMap import GameMap
@@ -44,7 +47,7 @@ class SkillEvent(Event):
         sleep(2)
 
 class ItemEvent(Event):
-    def __init__(self, user: player, item: str, users: list = None, pos: list = None):
+    def __init__(self, ledController: LEDController, user: player, item: str, users: list = None, pos: list = None):
         super().__init__(user)
         self.users = users
         self.pos = pos
@@ -62,13 +65,20 @@ class ItemEvent(Event):
 
 
 class FightEvent(Event):
-    def __init__(self, user1: player, user2: player, user3: player = None):
+    def __init__(self, ledController: LEDController, user1: player, user2: player, user3: player = None):
         super().__init__(user1)
         self.user2 = user2
         self.user3 = user3
         self.priority = 4
+        self.led = ledController
 
     def eventHandle(self, lcd):
+        # Ping led
+        # th = threading.Thread(target=self.led.hintLed,
+        #                       args=(self.user.position[0], self.user.position[1],))
+        # th.start()
+        self.led.hintLed(self.user.position[0], self.user.position[1])
+
         if self.user3 is not None:
             print(self.user.getName() + " fight with " + self.user2.getName() + " and " + self.user3.getName())
             lcd.writeLcd(self.user.getName() + " fight with " + self.user2.getName() + " and " + self.user3.getName())
