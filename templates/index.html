@@ -12,7 +12,27 @@
         margin-right:auto;
         text-align: center;
        }
+
+       .box{display: none;}
     </style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+                $('input[type="radio"]').click(function(){
+                    if($(this).attr("value")=="狙擊槍"){
+                        $(".box").hide();
+                        $(".bS01").show();
+                    }else if ($(this).attr("value")=="特殊技能" || $(this).attr("value")=="醫療箱"){
+                        $(".box").show();
+                        $(".bS01").hide();
+                    }
+                });
+            });
+        function hideGun(){
+            $(".box").show();
+            $(".bS01").hide();
+        }
+    </script>
     <body>
         <table border="2" >
             <tr>
@@ -52,8 +72,8 @@
             <input type="radio" value="right" name = "direction">
             <label for="">右</label>
             &nbsp
-            <!-- <input type="radio" value="no_move" name = "direction">
-            <label for="">不動</label> -->
+            <input type="radio" value="no_move" name = "direction">
+            <label for="">不動</label>
 
 <p>選擇道具：</p>
             <input type="radio" value="狙擊槍" name = "tool" {% if 0 not in user.items %} disabled {% endif %}>
@@ -66,8 +86,24 @@
             <label for="">醫療箱</label>
             <br>
             <br>
+            <div class="bS01 box bBW" style="display:none;">
+                你想向哪裡發射子彈？
+                <br>
+                <input type="radio" value="1" name = "bulletLoc" >
+                <label for="">1</label>
+                <input type="radio" value="2" name = "bulletLoc" >
+                <label for="">2</label>
+                <input type="radio" value="3" name = "bulletLoc" >
+                <label for="">3</label>
+                <input type="radio" value="4" name = "bulletLoc" >
+                <label for="">4</label>
+                <input type="radio" value="5" name = "bulletLoc" >
+                <label for="">5</label>
+                <input type="radio" value="6" name = "bulletLoc" >
+                <label for="">6</label>
+            </div>
             <input type="submit" value="發動！">
-            <button type="reset"> 清除 </button>
+            <button type="reset" value="reset" onclick="hideGun()"> 清除 </button>
         </form>
     </body>
 </html>
