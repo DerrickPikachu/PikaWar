@@ -32,7 +32,7 @@ class player:
         self.blood = level
 
     def setPower(self, level: int):
-        self.position = level
+        self.power = level
 
     def setDefense(self, level: int):
         self.defense= level

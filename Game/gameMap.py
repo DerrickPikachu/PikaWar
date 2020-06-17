@@ -13,13 +13,19 @@ class GameMap:
             row = pos[i] // 3
             col = pos[i] % 3
             self.blocks[row][col] = items[i]
+
     # Give the player item
     def moveOn(self, user: player):
         position = user.getPosition()
+        item = ""
+
         if self.blocks[position[0]][position[1]] != "":
-            itemsMap = {"狙擊槍": 0, "醫療箱":1, "步槍":2, "防彈衣":3}
+            itemsMap = {items[0]: 0, items[1]:1, items[2]:2, items[3]:3}
             user.items.add(itemsMap[self.blocks[position[0]][position[1]]])
+            item = self.blocks[position[0]][position[1]]
             self.blocks[position[0]][position[1]] = ""
+
+        return item
 
 if __name__ == '__main__':
     gameMap = GameMap()

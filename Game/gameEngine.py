@@ -63,8 +63,7 @@ class Engine:
     # Create get item event
     def __getItemOnMap(self, username: str):
         user = self.__choosePlayer(username)
-        # Create a new instance of game map for get item event
-        event = GetItemEvent(user, copy.deepcopy(self.gameMap))
+        event = GetItemEvent(user, self.gameMap)
         heapq.heappush(self.eventList, event)
 
     def run(self):

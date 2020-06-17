@@ -1,7 +1,7 @@
 from Game.player import player
 from Game.moveException import MoveException
 from Game.gameMap import GameMap
-from Game.item import items, sniperRifle, medical
+from Game.item import items, sniperRifle, medical, rifle, armor
 import heapq
 import random
 
@@ -118,9 +118,12 @@ class GetItemEvent(Event):
 
     def eventHandle(self):
         print(self.user.getName() + " get item")
-        self.gameMap.moveOn(self.user)
+        item = self.gameMap.moveOn(self.user)
         print(self.user.items)
-        
+        if item == items[2]:
+            rifle(self.user)
+        elif item == items[3]:
+            armor(self.user)
         
 
 
