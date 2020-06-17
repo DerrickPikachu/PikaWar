@@ -1,11 +1,13 @@
 from Game.moveException import MoveException
+import random
 
 class player:
     def __init__(self, name:str):
         self.name = name
         self.blood = 10
         self.power = 10
-        self.defense = 10
+        self.defense = 7
+        self.previousPos = [0, 0]
         self.position = [0, 0]
         self.items = set()
         self.usedCard = False
@@ -23,7 +25,7 @@ class player:
     def getDefense(self)->int:
         return self.defense
 
-    def convertPostoArr(self):
+    def convertPostArr(self):
         mapList = [0, 0, 0, 0, 0, 0]
         if self.position[0] == 0:
             mapList[self.position[1]] = 'style=\"background-color: red;\"'
@@ -50,9 +52,35 @@ class player:
         temPos[1] = moveVector[1] + self.position[1]
 
         if temPos[0] <= 1 and temPos[0] >= 0 and temPos[1] <= 2 and temPos[1] >= 0:
+            # Save previous position
+            self.previousPos[0] = self.position[0]
+            self.previousPos[1] = self.position[1]
+            # Set new Position
             self.position = temPos
         else:
             raise MoveException("move error!!")
+
+    def moveBack(self):
+        self.position[0] = self.previousPos[0]
+        self.position[1] = self.previousPos[1]
+
+    # Handle fighting, return loser
+    def fightWith(self, other):
+        other.blood -= self.power - other.defense
+        self.blood -= other.power - self.defense
+
+        # Return loser
+        if self.blood < other.blood:
+            return self
+        elif self.blood > other.blood:
+            return other
+        else:
+            # Randomly choose a user to be a loser
+            choose = random.randint(1, 2)
+            if choose == 1:
+                return self
+            else:
+                return other
 
 
 if __name__ == "__main__":

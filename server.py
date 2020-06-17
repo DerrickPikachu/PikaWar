@@ -31,7 +31,7 @@ def index():
                     session["username"] = username
                     playerpool[username] = player(username)
                     print("born", username)
-                    return render_template("index.html", user=playerpool[username], mapList = playerpool[username].convertPostoArr())
+                    return render_template("index.html", user=playerpool[username], mapList = playerpool[username].convertPostArr())
         else:
             print("Enter Deny!")
             return redirect(url_for('denyHandler'))
@@ -39,7 +39,7 @@ def index():
     else:
         username = session["username"]
         print("use", username)
-        return render_template("index.html", user=playerpool[username],mapList = playerpool[username].convertPostoArr())
+        return render_template("index.html", user=playerpool[username], mapList = playerpool[username].convertPostArr())
     
 
 @app.route('/', methods = ["POST"])
@@ -69,7 +69,7 @@ def formHandle():
 
         return redirect(url_for('loadingTimeHandler'))
     except MoveException:
-        return render_template("index.html", user=playerpool[username], mapList=playerpool[username].convertPostoArr())
+        return render_template("index.html", user=playerpool[username], mapList=playerpool[username].convertPostArr())
 
 
 @app.route('/loading')

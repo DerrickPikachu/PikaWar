@@ -55,6 +55,8 @@ class FightEvent(Event):
         if self.user3 is not None:
             print(self.user.getName() + " fight with " + self.user2.getName() + " and " + self.user3.getName())
         else:
+            loser = self.user.fightWith(self.user2)
+            loser.moveBack()
             print(self.user.getName() + " fight with " + self.user2.getName())
 
 
