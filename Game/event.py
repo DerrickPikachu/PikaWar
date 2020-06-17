@@ -1,6 +1,7 @@
 from Game.player import player
 from Game.moveException import MoveException
 from Game.gameMap import GameMap
+from Game.item import items, sniperRifle, medical
 import heapq
 import random
 
@@ -38,13 +39,19 @@ class SkillEvent(Event):
 
 
 class ItemEvent(Event):
-    def __init__(self, user: player, item: str):
+    def __init__(self, user: player, item: str, users: list = None, pos: list = None):
         super().__init__(user)
+        self.users = users
+        self.pos = pos
         self.item = item
         self.priority = 3
 
     def eventHandle(self):
         print(self.user.getName() + " use item!!!")
+        if self.item == items[0]:
+            sniperRifle(self.users[0], self.users[1], self.users[2], self.pos)
+        elif self.item == items[1]:
+            medical(self.user)
 
 
 class FightEvent(Event):
