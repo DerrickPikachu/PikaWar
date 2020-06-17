@@ -2,6 +2,7 @@ from Game.player import player
 from Game.moveException import MoveException
 from Game.gameMap import GameMap
 from Game.item import items, sniperRifle, medical, rifle, armor
+from Controller.LCDController import LCDController
 import heapq
 import random
 
@@ -11,7 +12,7 @@ class Event:
         self.user = user
         self.priority = 0
 
-    def eventHandle(self):
+    def eventHandle(self, lcd):
         pass
 
     def __lt__(self, other):
@@ -24,9 +25,10 @@ class MoveEvent(Event):
         self.action = action
         self.priority = 2
 
-    def eventHandle(self):
+    def eventHandle(self, lcd):
         self.user.move(self.action)
         print(self.user.getName() + " moving")
+        lcd.writeLcd(self.user.getName() + " moving")
 
 
 class SkillEvent(Event):
@@ -34,8 +36,9 @@ class SkillEvent(Event):
         super().__init__(user)
         self.priority = 1
 
-    def eventHandle(self):
+    def eventHandle(self, lcd):
         print(self.user.getName() + " use skill!!")
+        lcd.writeLcd(self.user.getName() + " use skill!!")
 
 
 class ItemEvent(Event):
@@ -46,8 +49,9 @@ class ItemEvent(Event):
         self.item = item
         self.priority = 3
 
-    def eventHandle(self):
+    def eventHandle(self, lcd):
         print(self.user.getName() + " use item!!!")
+        lcd.writeLcd(self.user.getName() + " use item!!!")
         if self.item == items[0]:
             sniperRifle(self.user, self.users[0], self.users[1], self.users[2], self.pos)
         elif self.item == items[1]:
@@ -61,9 +65,10 @@ class FightEvent(Event):
         self.user3 = user3
         self.priority = 4
 
-    def eventHandle(self):
+    def eventHandle(self, lcd):
         if self.user3 is not None:
             print(self.user.getName() + " fight with " + self.user2.getName() + " and " + self.user3.getName())
+            lcd.writeLcd(self.user.getName() + " fight with " + self.user2.getName() + " and " + self.user3.getName())
             # Let everyone get a fight
             self.user.fightWith(self.user2)
             self.user.fightWith(self.user3)
@@ -104,6 +109,7 @@ class FightEvent(Event):
             loser = self.user.fightWith(self.user2)
             loser.moveBack()
             print(self.user.getName() + " fight with " + self.user2.getName())
+            lcd.writeLcd(self.user.getName() + " fight with " + self.user2.getName())
             if self.user.getName() == loser.getName():
                 return self.user2.getName()
             else:
@@ -116,8 +122,9 @@ class GetItemEvent(Event):
         self.priority = 5
         self.gameMap = gameMap
 
-    def eventHandle(self):
+    def eventHandle(self, lcd):
         print(self.user.getName() + " get item")
+        lcd.writeLcd(self.user.getName() + " get item")
         item = self.gameMap.moveOn(self.user)
         print(self.user.items)
         if item == items[2]:
