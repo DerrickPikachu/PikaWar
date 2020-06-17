@@ -98,13 +98,13 @@
 
 <p style="font-weight: bold;">選擇道具：</p>
             <input type="radio" value="狙擊槍" name = "tool" {% if 0 not in user.items %} disabled {% endif %}>
-            <label for="">狙擊槍</label>
+            <label for="" {% if 0 in user.items %} style="color: blue;" {% endif %}>狙擊槍</label>
             &nbsp
             <input type="radio" value="特殊技能" name = "tool" {% if user.usedCard %} disabled {% endif %}>
-            <label for="">特殊技能（技能卡片）</label>
+            <label for="" {% if not user.usedCard %} style="color: blue;" {% endif %}>特殊技能（技能卡片）</label>
             &nbsp
             <input type="radio" value="醫療箱" name = "tool" {% if 1 not in user.items %} disabled {% endif %}>
-            <label for="">醫療箱</label>
+            <label for="" {% if 1 in user.items %} style="color: blue;" {% endif %}>醫療箱</label>
             <br>
             <br>
             <div class="bS01 box bBW" style="display:none;">
@@ -129,5 +129,7 @@
             &nbsp
             <button type="reset" value="reset" onclick="hideGun()"> 清除 </button>
         </form>
+        <label for="" {% if 3 not in user.items %} hidden {% endif %}>獲得防彈衣（已裝備）防禦力＋2</label>
+        <label for="" {% if 2 not in user.items %} hidden {% endif %}>獲得步槍（已裝備）攻擊力＋2</label>
     </body>
 </html>
