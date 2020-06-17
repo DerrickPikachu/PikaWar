@@ -24,6 +24,18 @@ class player:
 
     def getDefense(self)->int:
         return self.defense
+    
+    def getPosition(self)->list:
+        return self.position
+
+    def setBlood(self, level: int):
+        self.blood = level
+
+    def setPower(self, level: int):
+        self.position = level
+
+    def setDefense(self, level: int):
+        self.defense= level
 
     def convertPostArr(self):
         mapList = [0, 0, 0, 0, 0, 0]
