@@ -6,6 +6,7 @@ from Game.moveException import MoveException
 from Game.gameMap import GameMap
 from Game.item import items, sniperRifle, medical, rifle, armor
 from Controller.LCDController import LCDController
+from time import sleep
 import heapq
 import random
 
@@ -32,6 +33,7 @@ class MoveEvent(Event):
         self.user.move(self.action)
         print(self.user.getName() + " moving")
         lcd.writeLcd(self.user.getName() + " moving")
+        sleep(2)
 
 
 class SkillEvent(Event):
@@ -42,7 +44,7 @@ class SkillEvent(Event):
     def eventHandle(self, lcd):
         print(self.user.getName() + " use skill!!")
         lcd.writeLcd(self.user.getName() + " use skill!!")
-
+        sleep(2)
 
 class ItemEvent(Event):
     def __init__(self, ledController: LEDController, user: player, item: str, users: list = None, pos: list = None):
@@ -56,6 +58,7 @@ class ItemEvent(Event):
     def eventHandle(self, lcd):
         print(self.user.getName() + " use item!!!")
         lcd.writeLcd(self.user.getName() + " use item!!!")
+        sleep(2)
         if self.item == items[0]:
             self.led.hintLed(self.pos[0], self.pos[1])
             sniperRifle(self.user, self.users[0], self.users[1], self.users[2], self.pos)
@@ -122,6 +125,7 @@ class FightEvent(Event):
             loser.moveBack()
             print(self.user.getName() + " fight with " + self.user2.getName())
             lcd.writeLcd(self.user.getName() + " fight with " + self.user2.getName())
+            sleep(2)
             if self.user.getName() == loser.getName():
                 return self.user2.getName()
             else:
@@ -137,6 +141,7 @@ class GetItemEvent(Event):
     def eventHandle(self, lcd):
         print(self.user.getName() + " get item")
         lcd.writeLcd(self.user.getName() + " get item")
+        sleep(2)
         item = self.gameMap.moveOn(self.user)
         print(self.user.items)
         if item == items[2]:
