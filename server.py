@@ -100,7 +100,7 @@ def loadingTimeHandler():
 @app.route('/deny')
 def denyHandler():
     return render_template("deny.html")
-True
+
 
 @app.route('/death')
 def deathHandler():
