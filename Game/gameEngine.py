@@ -53,7 +53,7 @@ class Engine:
     # Create skill event
     def useSkill(self, username: str, id: str):
         tem = self.__choosePlayer(username=username)
-        event = SkillEvent(tem, id)
+        event = SkillEvent(self.ledController, tem, id)
         heapq.heappush(self.eventList, event)
 
     # There is someone who's blood become zero
