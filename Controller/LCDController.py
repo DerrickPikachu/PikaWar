@@ -4,12 +4,13 @@ import smbus
 import sys
 from RPLCD.i2c import CharLCD
 
-GPIO.setmode(GPIO.BCM)
-sys.modules['smbus'] = smbus
+
 
 class LCDController:
     def __init__(self):
         self.lcd = CharLCD('PCF8574', address=0x27, port=1, backlight_enabled=True)
+        GPIO.setmode(GPIO.BCM)
+        sys.modules['smbus'] = smbus
 
     def writeLcd(self, firstStr, secondStr=""):
         self.lcd.clear()
