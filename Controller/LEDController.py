@@ -28,7 +28,8 @@ class LEDController:
 
 if __name__ == "__main__":
     ledController = LEDController()
-
-    for row in range(2):
-        for col in range(3):
-            ledController.hintLed(row, col)
+    ledController.hintAllLed()
+    #
+    # for row in range(2):
+    #     for col in range(3):
+    #         ledController.hintLed(row, col)
