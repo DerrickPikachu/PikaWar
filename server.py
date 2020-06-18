@@ -67,6 +67,8 @@ def formHandle():
                 rfid = RFIDResovler()
                 id = rfid.readRFID()
                 print("Get card id")
+                engine.lcd.writeLcd("Get card id","id: "+id)
+                sleep(3)
                 engine.useSkill(username, id)
             elif tool == items[1]:
                 engine.chooseItem(username=username, item=request.values.get('tool'))
