@@ -4,7 +4,7 @@ from Controller.LEDController import LEDController
 from Game.player import player
 from Game.moveException import MoveException
 from Game.gameMap import GameMap
-from Game.item import items, sniperRifle, medical, rifle, armor, skillCard, fireEveryone, entireHeal
+from Game.item import items, sniperRifle, medical, rifle, armor, skillCard, fireEveryone, entireHeal, enforce
 from Controller.LCDController import LCDController
 from time import sleep
 import heapq
@@ -52,7 +52,7 @@ class SkillEvent(Event):
         elif self.id == skillCard[1]:
             entireHeal(self.user)
         elif self.id == skillCard[2]:
-            pass
+            enforce(self.user)
         sleep(3)
 
 class ItemEvent(Event):

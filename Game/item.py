@@ -15,6 +15,11 @@ def entireHeal(user: player):
     user.setBlood(10)
 
 
+def enforce(user: player):
+    user.setPower(user.getPower() + 3)
+    user.enforced = True
+
+
 def sniperRifle(user: player, user1: player, user2: player, user3: player, location:list):
     users = [user1, user2, user3]
     print("sniperRifle Active!")

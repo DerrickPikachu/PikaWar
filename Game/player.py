@@ -1,6 +1,7 @@
 from Game.moveException import MoveException
 import random
 
+
 class player:
     def __init__(self, name:str, position:list):
         # Player attribute
@@ -21,6 +22,7 @@ class player:
         self.usedCard = False
         self.ready = False
         self.alive = True
+        self.enforced = False
 
     def getName(self)->str:
         return self.name
