@@ -50,9 +50,11 @@ class SkillEvent(Event):
         print("Get card id")
         lcd.writeLcd("Get card id", "id: " + str(id))
         sleep(3)
+
         print(self.user.getName() + " use skill!!")
         # lcd.writeLcd(self.user.getName() + " use skill!!")
         print("identify skill")
+
         if str(id) == skillCard[0]:
             print("fire everyone")
             lcd.writeLcd(self.user.getName(), "fire everyone")
@@ -65,6 +67,7 @@ class SkillEvent(Event):
             print("enforce")
             lcd.writeLcd(self.user.getName(), "enforce")
             enforce(self.user)
+        self.user.usedCard = True
         sleep(3)
 
 class ItemEvent(Event):

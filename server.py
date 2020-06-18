@@ -115,17 +115,23 @@ def denyHandler():
 
 @app.route('/death')
 def deathHandler():
+    global counter
     session.clear()
     # When draw
     if Engine.MAX_PLAYER == 0:
+        counter = 0
         Engine.MAX_PLAYER = 3
     return render_template("death.html")
 
 
 @app.route('/winner')
 def winnerHandler():
+    global counter
+    username = session.get('username')
+    del playerpool[username]
     session.clear()
     # Let the server can start a new game
+    counter = 0
     Engine.MAX_PLAYER = 3
     return render_template("winner.html")
 

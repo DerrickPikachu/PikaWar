@@ -77,6 +77,13 @@ class Engine:
         event = GetItemEvent(user, self.gameMap)
         heapq.heappush(self.eventList, event)
 
+    def checkDead(self):
+        for p in self.users:
+            print(p.getName() + str(p.alive))
+            if p.alive and p.getBlood() <= 0:
+                print(p.getName() + " die")
+                self.makeDead(p.getName())
+
     def run(self):
         # Is used to check whether the three player have moved
         moveCount = 0
@@ -116,9 +123,7 @@ class Engine:
                                 self.__getItemOnMap(self.users[i].getName())
 
             # Check someone's death
-            for p in self.users:
-                if p.alive and p.getBlood() <= 0:
-                    self.makeDead(p.getName())
+            self.checkDead()
 
         # Hint new round start
         self.lcd.writeLcd("New round")
@@ -131,3 +136,5 @@ class Engine:
 
             if Engine.MAX_PLAYER == 2 and p.alive:
                 p.setBlood(p.getBlood() - 1)
+
+        self.checkDead()

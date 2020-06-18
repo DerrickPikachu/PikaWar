@@ -31,14 +31,12 @@ def sniperRifle(user: player, user1: player, user2: player, user3: player, locat
     if user1.getPosition() == location:
         print("sniperRifle user1 is attacked!")
         user1.setBlood(user1.getBlood()//2)
-    elif user2.getPosition() == location:
+    if user2.getPosition() == location:
         print("sniperRifle user2 is attacked!")
         user2.setBlood(user2.getBlood()//2)
-    elif user3.getPosition() == location:
+    if user3.getPosition() == location:
         print("sniperRifle user3 is attacked!")
         user3.setBlood(user3.getBlood()//2)
-    else:
-        print("nobody will be hurt!")
 
     user.bull -= 1
     if user.bull == 0:
