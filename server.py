@@ -63,6 +63,7 @@ def formHandle():
         if request.values.get('tool'):
             tool = request.values.get('tool')
             if tool == '特殊技能':
+                engine.lcd.writeLcd("please sense your card!")
                 rfid = RFIDResovler()
                 id = rfid.readRFID()
                 print("Get card id")
