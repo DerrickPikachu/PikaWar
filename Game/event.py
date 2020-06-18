@@ -1,6 +1,7 @@
 import threading
 
 from Controller.LEDController import LEDController
+from Controller.RFIDResovler import RFIDResovler
 from Game.player import player
 from Game.moveException import MoveException
 from Game.gameMap import GameMap
@@ -37,7 +38,7 @@ class MoveEvent(Event):
 
 
 class SkillEvent(Event):
-    def __init__(self, ledController: LEDController, user: player, id: str, users: list = None):
+    def __init__(self, ledController: LEDController, user: player, users: list = None):
         super().__init__(user)
         self.priority = 1
         self.users = users
@@ -45,6 +46,12 @@ class SkillEvent(Event):
         self.id = id
 
     def eventHandle(self, lcd):
+        lcd.writeLcd(self.user.getName() + "please sense", "your card!")
+        rfid = RFIDResovler()
+        id = rfid.readRFID()
+        print("Get card id")
+        lcd.writeLcd("Get card id", "id: " + str(id))
+        sleep(3)
         print(self.user.getName() + " use skill!!")
         lcd.writeLcd(self.user.getName() + " use skill!!")
         if self.id == skillCard[0]:

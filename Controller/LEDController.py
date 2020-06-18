@@ -1,13 +1,12 @@
 import RPi.GPIO as GPIO
 import time
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-
 
 class LEDController:
     def __init__(self):
         self.ledMap = [[16, 20, 21], [13, 19, 26]]
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
 
         for row in self.ledMap:
             for col in row:
