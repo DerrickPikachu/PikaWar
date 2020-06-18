@@ -120,3 +120,8 @@ class Engine:
                 if p.alive and p.getBlood() <= 0:
                     self.makeDead(p.getName())
 
+        # Handle the enforce card effect
+        for p in self.users:
+            if p.enforced:
+                p.enforced = False
+                p.setPower(p.getPower() - 3)
