@@ -68,7 +68,8 @@ class ItemEvent(Event):
         print(self.user.getName() + " use item!!!")
         if self.item == items[0]:
             self.led.hintLed(self.pos[0], self.pos[1])
-            lcd.writeLcd(self.user.getName() + " use sniperRifle", "Location: "+ self.pos)
+            locmap={[0,0]:"1", [0,1]:"2", [0,2]:"3", [1,0]:"4", [1,1]:"5", [1,2]:"6"}
+            lcd.writeLcd(self.user.getName() + " use sniperRifle", "Location: "+ locmap[self.pos])
             sleep(3)
             sniperRifle(self.user, self.users[0], self.users[1], self.users[2], self.pos)
         elif self.item == items[1]:
@@ -94,7 +95,9 @@ class FightEvent(Event):
 
         if self.user3 is not None:
             print(self.user.getName() + " fight with " + self.user2.getName() + " and " + self.user3.getName())
-            lcd.writeLcd(self.user.getName() + " fight with " + self.user2.getName() + " and " + self.user3.getName())
+            lcd.writeLcd("    "+self.user.getName() , "    fight with   ")
+            sleep(2)
+            lcd.writeLcd("",self.user2.getName() + " and " + self.user3.getName())
             sleep(3)
             # Let everyone get a fight
             self.user.fightWith(self.user2)
