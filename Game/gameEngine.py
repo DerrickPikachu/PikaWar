@@ -120,6 +120,9 @@ class Engine:
                 if p.alive and p.getBlood() <= 0:
                     self.makeDead(p.getName())
 
+        # Hint new round start
+        self.lcd.writeLcd("New round")
+
         # Handle the enforce card effect
         for p in self.users:
             if p.enforced:

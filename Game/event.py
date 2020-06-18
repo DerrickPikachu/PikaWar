@@ -51,16 +51,19 @@ class SkillEvent(Event):
         lcd.writeLcd("Get card id", "id: " + str(id))
         sleep(3)
         print(self.user.getName() + " use skill!!")
-        lcd.writeLcd(self.user.getName() + " use skill!!")
+        # lcd.writeLcd(self.user.getName() + " use skill!!")
         print("identify skill")
         if str(id) == skillCard[0]:
             print("fire everyone")
+            lcd.writeLcd(self.user.getName(), "fire everyone")
             fireEveryone(self.user, self.users)
         elif str(id) == skillCard[1]:
             print("heal")
+            lcd.writeLcd(self.user.getName(), "heal")
             entireHeal(self.user)
         elif str(id) == skillCard[2]:
             print("enforce")
+            lcd.writeLcd(self.user.getName(), "enforce")
             enforce(self.user)
         sleep(3)
 
@@ -76,10 +79,15 @@ class ItemEvent(Event):
         print(self.user.getName() + " use item!!!")
         if self.item == items[0]:
             led = LEDController()
-            led.hintLed(self.pos[0], self.pos[1])
+            th = threading.Thread(target=led.hintLed,
+                                  args=(self.pos[0], self.pos[1],))
+            th.start()
+            # led.hintLed(self.pos[0], self.pos[1])
+
             location = str(self.pos[0] * 3 + self.pos[1] + 1)
             lcd.writeLcd(self.user.getName() + " use sniperRifle", "Location: " + location)
             sleep(3)
+
             sniperRifle(self.user, self.users[0], self.users[1], self.users[2], self.pos)
         elif self.item == items[1]:
             lcd.writeLcd(self.user.getName() + " use medical")
@@ -95,12 +103,11 @@ class FightEvent(Event):
         self.priority = 4
 
     def eventHandle(self, lcd):
-        # Ping led
-        # th = threading.Thread(target=self.led.hintLed,
-        #                       args=(self.user.position[0], self.user.position[1],))
-        # th.start()
         led = LEDController()
-        led.hintLed(self.user.position[0], self.user.position[1])
+        th = threading.Thread(target=led.hintLed,
+                              args=(self.user.position[0], self.user.position[1],))
+        th.start()
+        # led.hintLed(self.user.position[0], self.user.position[1])
 
         if self.user3 is not None:
             print(self.user.getName() + " fight with " + self.user2.getName() + " and " + self.user3.getName())

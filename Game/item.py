@@ -1,3 +1,5 @@
+import threading
+
 from Controller.LEDController import LEDController
 from Game.player import player
 items = ["狙擊槍", "醫療箱", "步槍", "防彈衣"]
@@ -6,7 +8,9 @@ skillCard = ["11585532937", "925122828597", "1050668903105"]
 
 def fireEveryone(user: player, users: list):
     led = LEDController()
-    led.hintAllLed()
+    th = threading.Thread(target=led.hintAllLed)
+    th.start()
+    # led.hintAllLed()
     for u in users:
         if u.getName() != user.getName():
             u.setBlood(u.getBlood() - 2)
