@@ -38,12 +38,10 @@ class MoveEvent(Event):
 
 
 class SkillEvent(Event):
-    def __init__(self, ledController: LEDController, user: player, users: list = None):
+    def __init__(self, user: player, users: list = None):
         super().__init__(user)
         self.priority = 1
         self.users = users
-        self.led = ledController
-        self.id = id
 
     def eventHandle(self, lcd):
         lcd.writeLcd(self.user.getName() + "please sense", "your card!")
@@ -54,29 +52,33 @@ class SkillEvent(Event):
         sleep(3)
         print(self.user.getName() + " use skill!!")
         lcd.writeLcd(self.user.getName() + " use skill!!")
-        if self.id == skillCard[0]:
-            fireEveryone(self.user, self.users, self.led)
-        elif self.id == skillCard[1]:
+        print("identify skill")
+        if str(id) == skillCard[0]:
+            print("fire everyone")
+            fireEveryone(self.user, self.users)
+        elif str(id) == skillCard[1]:
+            print("heal")
             entireHeal(self.user)
-        elif self.id == skillCard[2]:
+        elif str(id) == skillCard[2]:
+            print("enforce")
             enforce(self.user)
         sleep(3)
 
 class ItemEvent(Event):
-    def __init__(self, ledController: LEDController, user: player, item: str, users: list = None, pos: list = None):
+    def __init__(self, user: player, item: str, users: list = None, pos: list = None):
         super().__init__(user)
         self.users = users
         self.pos = pos
         self.item = item
         self.priority = 3
-        self.led = ledController
 
     def eventHandle(self, lcd):
         print(self.user.getName() + " use item!!!")
         if self.item == items[0]:
-            self.led.hintLed(self.pos[0], self.pos[1])
-            locmap={[0,0]:"1", [0,1]:"2", [0,2]:"3", [1,0]:"4", [1,1]:"5", [1,2]:"6"}
-            lcd.writeLcd(self.user.getName() + " use sniperRifle", "Location: "+ locmap[self.pos])
+            led = LEDController()
+            led.hintLed(self.pos[0], self.pos[1])
+            location = str(self.pos[0] * 3 + self.pos[1] + 1)
+            lcd.writeLcd(self.user.getName() + " use sniperRifle", "Location: " + location)
             sleep(3)
             sniperRifle(self.user, self.users[0], self.users[1], self.users[2], self.pos)
         elif self.item == items[1]:
@@ -86,19 +88,19 @@ class ItemEvent(Event):
 
 
 class FightEvent(Event):
-    def __init__(self, ledController: LEDController, user1: player, user2: player, user3: player = None):
+    def __init__(self, user1: player, user2: player, user3: player = None):
         super().__init__(user1)
         self.user2 = user2
         self.user3 = user3
         self.priority = 4
-        self.led = ledController
 
     def eventHandle(self, lcd):
         # Ping led
         # th = threading.Thread(target=self.led.hintLed,
         #                       args=(self.user.position[0], self.user.position[1],))
         # th.start()
-        self.led.hintLed(self.user.position[0], self.user.position[1])
+        led = LEDController()
+        led.hintLed(self.user.position[0], self.user.position[1])
 
         if self.user3 is not None:
             print(self.user.getName() + " fight with " + self.user2.getName() + " and " + self.user3.getName())

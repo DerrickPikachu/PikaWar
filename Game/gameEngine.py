@@ -45,15 +45,15 @@ class Engine:
         tem = self.__choosePlayer(username=username)
         # event = ItemEvent
         if pos is not None:
-            event = ItemEvent(self.ledController, tem, item, self.users, pos)
+            event = ItemEvent(tem, item, self.users, pos)
         else:
-            event = ItemEvent(self.ledController, tem, item)
+            event = ItemEvent(tem, item)
         heapq.heappush(self.eventList, event)
 
     # Create skill event
     def useSkill(self, username: str):
         tem = self.__choosePlayer(username=username)
-        event = SkillEvent(self.ledController, tem, self.users)
+        event = SkillEvent(tem, self.users)
         heapq.heappush(self.eventList, event)
 
     # There is someone who's blood become zero
@@ -65,10 +65,10 @@ class Engine:
     # Create fight event
     def __generateFight(self, user1: player, user2: player, user3: player = None):
         if user3 is not None:
-            event = FightEvent(self.ledController, user1, user2, user3)
+            event = FightEvent(user1, user2, user3)
             heapq.heappush(self.eventList, event)
         else:
-            event = FightEvent(self.ledController, user1, user2)
+            event = FightEvent(user1, user2)
             heapq.heappush(self.eventList, event)
 
     # Create get item event
@@ -125,3 +125,6 @@ class Engine:
             if p.enforced:
                 p.enforced = False
                 p.setPower(p.getPower() - 3)
+
+            if Engine.MAX_PLAYER == 2 and p.alive:
+                p.setBlood(p.getBlood() - 1)

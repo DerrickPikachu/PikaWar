@@ -18,11 +18,13 @@ class LEDController:
         GPIO.output(self.ledMap[row][col], 0)
 
     def hintAllLed(self):
-        for num in self.ledMap:
-            GPIO.output(num, 1)
+        for row in self.ledMap:
+            for num in row:
+                GPIO.output(num, 1)
         time.sleep(3)
-        for num in self.ledMap:
-            GPIO.output(num, 0)
+        for row in self.ledMap:
+            for num in row:
+                GPIO.output(num, 0)
 
 
 if __name__ == "__main__":
