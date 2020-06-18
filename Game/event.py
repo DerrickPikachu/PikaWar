@@ -57,12 +57,14 @@ class ItemEvent(Event):
 
     def eventHandle(self, lcd):
         print(self.user.getName() + " use item!!!")
-        lcd.writeLcd(self.user.getName() + " use item!!!")
-        sleep(3)
         if self.item == items[0]:
             self.led.hintLed(self.pos[0], self.pos[1])
+            lcd.writeLcd(self.user.getName() + " use sniperRifle", "Location: "+ self.pos)
+            sleep(3)
             sniperRifle(self.user, self.users[0], self.users[1], self.users[2], self.pos)
         elif self.item == items[1]:
+            lcd.writeLcd(self.user.getName() + " use medical")
+            sleep(3)
             medical(self.user)
 
 
@@ -140,10 +142,11 @@ class GetItemEvent(Event):
         self.gameMap = gameMap
 
     def eventHandle(self, lcd):
-        print(self.user.getName() + " get item")
-        lcd.writeLcd(self.user.getName() + " get item")
-        sleep(3)
         item = self.gameMap.moveOn(self.user)
+        if item != "":
+            print(self.user.getName() + " get item")
+            lcd.writeLcd(self.user.getName() + " get item", item)
+            sleep(3)
         print(self.user.items)
         if item == items[2]:
             rifle(self.user)
