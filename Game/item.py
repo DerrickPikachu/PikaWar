@@ -1,5 +1,18 @@
+from Controller.LEDController import LEDController
 from Game.player import player
 items = ["狙擊槍", "醫療箱", "步槍", "防彈衣"]
+skillCard = ["11585532937", "925122828597", "1050668903105"]
+
+
+def fireEveryone(user: player, users: list, led: LEDController):
+    led.hintAllLed()
+    for u in users:
+        if u.getName() != user.getName():
+            u.setBlood(u.getBlood - 2)
+
+
+def entireHeal(user: player):
+    user.setBlood(10)
 
 
 def sniperRifle(user: player, user1: player, user2: player, user3: player, location:list):

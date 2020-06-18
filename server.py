@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, url_for, redirect
 import os
 from datetime import timedelta
 
+from Controller.RFIDResovler import RFIDResovler
 from Game.item import items
 from Game.player import player
 import threading
@@ -62,7 +63,10 @@ def formHandle():
         if request.values.get('tool'):
             tool = request.values.get('tool')
             if tool == '特殊技能':
-                engine.useSkill(username)
+                rfid = RFIDResovler()
+                id = rfid.readRFID()
+                print("Get card id")
+                engine.useSkill(username, id)
             elif tool == items[1]:
                 engine.chooseItem(username=username, item=request.values.get('tool'))
             elif tool == items[0]:

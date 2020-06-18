@@ -51,9 +51,9 @@ class Engine:
         heapq.heappush(self.eventList, event)
 
     # Create skill event
-    def useSkill(self, username: str):
+    def useSkill(self, username: str, id: str):
         tem = self.__choosePlayer(username=username)
-        event = SkillEvent(tem)
+        event = SkillEvent(tem, id)
         heapq.heappush(self.eventList, event)
 
     # There is someone who's blood become zero

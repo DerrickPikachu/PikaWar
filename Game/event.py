@@ -4,7 +4,7 @@ from Controller.LEDController import LEDController
 from Game.player import player
 from Game.moveException import MoveException
 from Game.gameMap import GameMap
-from Game.item import items, sniperRifle, medical, rifle, armor
+from Game.item import items, sniperRifle, medical, rifle, armor, skillCard, fireEveryone, entireHeal
 from Controller.LCDController import LCDController
 from time import sleep
 import heapq
@@ -37,13 +37,22 @@ class MoveEvent(Event):
 
 
 class SkillEvent(Event):
-    def __init__(self, user: player):
+    def __init__(self, ledController: LEDController, user: player, id: str, users: list = None):
         super().__init__(user)
         self.priority = 1
+        self.users = users
+        self.led = ledController
+        self.id = id
 
     def eventHandle(self, lcd):
         print(self.user.getName() + " use skill!!")
         lcd.writeLcd(self.user.getName() + " use skill!!")
+        if self.id == skillCard[0]:
+            fireEveryone(self.user, self.users, self.led)
+        elif self.id == skillCard[1]:
+            entireHeal(self.user)
+        elif self.id == skillCard[2]:
+            pass
         sleep(3)
 
 class ItemEvent(Event):
